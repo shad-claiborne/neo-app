@@ -16,8 +16,13 @@
 	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client",
-		"not_found_handling": "single-page-application"
-	}
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/login",
+			"/oauth/callback",
+			"/id"
+		]
+	},
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -35,7 +40,17 @@
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
-	// "vars": {  "MY_VARIABLE": "production_value" }
+	"vars": {
+		"HONO_OIDC_ISSUER": "https://id.shadclaiborne.com",
+		"HONO_OIDC_CLIENT_ID": "0qwgn13r0gbqw0rbg8on",
+		"HONO_OIDC_CLIENT_SECRET": "123",
+		"HONO_OIDC_REDIRECT_URI": "http://localhost:5173/oauth/callback",
+		"HONO_OIDC_COOKIE_SECRET": "abc123",
+		"HONO_OIDC_ID_TOKEN_COOKIE": "idtok",
+		"HONO_OIDC_REFRESH_TOKEN_COOKIE": "refrtok",
+		"HONO_OIDC_ACCESS_TOKEN_COOKIE": "tok",
+		"HONO_OIDC_CODE_VERIFIER_COOKIE": "codver"
+	}
 	/**
 	 * Service Bindings (communicate between multiple Workers)
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
