@@ -12,7 +12,8 @@
 		"publish": true
 	},
 	"dependencies": {
-		"@shad-claiborne/hono-middleware-oidc": "^1.0.9",
+		"@shad-claiborne/hono-middleware-oidc": "^1.1.3",
+		"axios": "^1.13.6",
 		"hono": "4.11.1",
 		"react": "19.2.1",
 		"react-dom": "19.2.1"

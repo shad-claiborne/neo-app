@@ -1,19 +1,27 @@
-import { Hono } from "hono";
+import { Hono, MiddlewareHandler } from "hono";
 import { except } from "hono/combine";
-import { forAuthorization, withIdentity } from "@shad-claiborne/hono-middleware-oidc";
+import { addIdentity, checkIdentity, handleFlow, receiveAuth } from '@shad-claiborne/hono-middleware-oidc'
 
 const app = new Hono<{ Bindings: Env }>();
 
-app.use('*', except(['/login', '/oauth/callback'], withIdentity));
-
-app.use('/oauth/callback', forAuthorization);
-
-app.get('/login', async (c, next) => {
+/**
+ * addOrigin
+ * @param c 
+ * @param next 
+ */
+const addOrigin: MiddlewareHandler = async (c, next) => {
     const appUrl = new URL('/', c.req.url);
     c.set('originUrl', appUrl.toString());
-    return await withIdentity(c, next);
-});
+    await next();
+};
 
-app.get('/id', async (c) => c.json(c.get('identity')));
+app.use('*', except('/auth/callback', addIdentity));
+app.use('*', except(['/login', '/auth/callback'], checkIdentity));
+app.use('/auth/callback', receiveAuth);
+app.use('/login', addOrigin, handleFlow);
+
+app.get('/async/id', async (c) => {
+    return c.json(c.get('identity'));
+});
 
 export default app;

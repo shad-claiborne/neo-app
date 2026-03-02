@@ -19,8 +19,8 @@
 		"not_found_handling": "single-page-application",
 		"run_worker_first": [
 			"/login",
-			"/oauth/callback",
-			"/id"
+			"/auth/callback",
+			"/async/id"
 		]
 	},
 	/**
@@ -44,7 +44,7 @@
 		"HONO_OIDC_ISSUER": "https://id.shadclaiborne.com",
 		"HONO_OIDC_CLIENT_ID": "0qwgn13r0gbqw0rbg8on",
 		"HONO_OIDC_CLIENT_SECRET": "123",
-		"HONO_OIDC_REDIRECT_URI": "http://localhost:5173/oauth/callback",
+		"HONO_OIDC_REDIRECT_URI": "http://localhost:5173/auth/callback",
 		"HONO_OIDC_COOKIE_SECRET": "abc123",
 		"HONO_OIDC_ID_TOKEN_COOKIE": "idtok",
 		"HONO_OIDC_REFRESH_TOKEN_COOKIE": "refrtok",
