@@ -1,6 +1,6 @@
 import { Hono, MiddlewareHandler } from "hono";
 import { except } from "hono/combine";
-import { addIdentity, checkIdentity, handleFlow, receiveAuth } from '@shad-claiborne/hono-middleware-oidc'
+import { addIdentity, checkIdentity, handleAuth, receiveAuth } from '@shad-claiborne/hono-middleware-oidc';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -18,7 +18,7 @@ const addOrigin: MiddlewareHandler = async (c, next) => {
 app.use('*', except('/auth/callback', addIdentity));
 app.use('*', except(['/login', '/auth/callback'], checkIdentity));
 app.use('/auth/callback', receiveAuth);
-app.use('/login', addOrigin, handleFlow);
+app.use('/login', addOrigin, handleAuth);
 
 app.get('/async/id', async (c) => {
     return c.json(c.get('identity'));
